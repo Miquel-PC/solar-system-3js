@@ -33,7 +33,10 @@ const systemObjects = [];
 
 const solarSystem = new THREE.Object3D();
 const earthOrbit = new THREE.Object3D();
+const earthOrbit2 = new THREE.Object3D();
 const moonOrbit = new THREE.Object3D();
+const moonOrbit2 = new THREE.Object3D();
+const moonOrbit3 = new THREE.Object3D();
 
 systemObjects.push(solarSystem);
 systemObjects.push(earthOrbit);
@@ -42,11 +45,22 @@ systemObjects.push(moonOrbit);
 
 // solar system setup
 solarSystem.add(earthOrbit);
+solarSystem.add(earthOrbit2);
+
 earthOrbit.position.x = 200;
 earthOrbit.position.y = 30;
-
 earthOrbit.add(moonOrbit);
 moonOrbit.position.x = 30;
+
+
+earthOrbit2.position.x = 400;
+earthOrbit2.position.y = 30;
+earthOrbit2.add(moonOrbit2);
+earthOrbit2.add(moonOrbit3);
+moonOrbit2.position.x = 50;
+moonOrbit3.position.x = 90;
+moonOrbit3.position.z = 30;
+
 
 scene.add(solarSystem);
 
@@ -68,10 +82,31 @@ objectLoader(
 );
 
 objectLoader(
+    "model/earth/scene.gltf",
+    new THREE.Vector3(2, 2, 2),
+    new THREE.Vector3(0, 0, 0),
+    earthOrbit2
+);
+
+objectLoader(
     "model/zelda_moon/scene.gltf",
     new THREE.Vector3(0.005, 0.005, 0.005),
     new THREE.Vector3(0, 0, 0),
     moonOrbit
+);
+
+objectLoader(
+    "model/zelda_moon/scene.gltf",
+    new THREE.Vector3(0.005, 0.005, 0.005),
+    new THREE.Vector3(0, 0, 0),
+    moonOrbit2
+);
+
+objectLoader(
+    "model/zelda_moon/scene.gltf",
+    new THREE.Vector3(0.005, 0.005, 0.005),
+    new THREE.Vector3(0, 0, 0),
+    moonOrbit3
 );
 
 

@@ -24,63 +24,56 @@ light.castShadow = true;
 
 
 // CAMERA
-camera.translateZ(15);
-camera.translateY(15);
+camera.translateZ(150);
+camera.translateY(50);
 
 
 // object declaration & initialization
 const systemObjects = [];
 
 const solarSystem = new THREE.Object3D();
-const sunOrbit = new THREE.Object3D();
 const earthOrbit = new THREE.Object3D();
 const moonOrbit = new THREE.Object3D();
 
-scene.add(sunOrbit);
-scene.add(earthOrbit);
-scene.add(moonOrbit);
+systemObjects.push(solarSystem);
+systemObjects.push(earthOrbit);
+systemObjects.push(moonOrbit);
+
+
+// solar system setup
+
+solarSystem.add(earthOrbit);  // Earth orbits the sun
+earthOrbit.position.x = 200;  // Position earth orbit away from the center
+earthOrbit.position.y = 30;  // Position earth orbit away from the center
+
+earthOrbit.add(moonOrbit);    // Moon orbits earth
+moonOrbit.position.x = 30;    // Position moon orbit away from earth
+
+scene.add(solarSystem);
 
 
 
+// texture loading
 objectLoader(
     "model/pumpkin/scene.gltf",
-    new THREE.Vector3(2, 2, 2),
-    new THREE.Vector3(0, 200, 0),
-    sunOrbit
+    new THREE.Vector3(0.5, 0.5, 0.5),
+    new THREE.Vector3(0, 0, 0),
+    solarSystem
 );
 
 objectLoader(
     "model/earth/scene.gltf",
-    new THREE.Vector3(1, 1, 1),
+    new THREE.Vector3(2, 2, 2),
     new THREE.Vector3(0, 0, 0),
     earthOrbit
 );
 
 objectLoader(
     "model/zelda_moon/scene.gltf",
-    new THREE.Vector3(0.1, 0.1, 0.1),
+    new THREE.Vector3(0.005, 0.005, 0.005),
     new THREE.Vector3(0, 0, 0),
     moonOrbit
 );
-
-
-
-// texture loading
-
-/*objectLoader(sun, "model/sun_pumpkin/scene.gltf", 5, new THREE.Vector3(0, 0, 0));
-objectLoader(earth, "model/earth/scene.gltf", 2, new THREE.Vector3(2, 0, 0));
-objectLoader(moon, "model/zelda_moon/scene.gltf", 1, new THREE.Vector3(6, 0, 0));*/
-
-
-/*function loadModelAsync() {
-
-}
-
-Promise.all([
-    loadModelAsync(sun, "model/sun_pumpkin/scene.gltf", 2)
-]).then(() => {
-    renderer.setAnimationLoop(animate);
-});*/
 
 
 function objectLoader(url, size, position, orbit) {
@@ -97,8 +90,6 @@ function objectLoader(url, size, position, orbit) {
 renderer.setSize(width, height);
 renderer.setAnimationLoop(animate);
 
-window.moon = moonOrbit;
-
 document.querySelector("body").appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -107,11 +98,9 @@ function animate() {
     const currentTime = Date.now();
     const deltaTime = currentTime - time;
     time = currentTime;
-    // set everything that needs to change here
 
-    systemObjects.forEach((o) => {
-        if (o !== undefined)
-            o.rotateY(0.0001 * deltaTime);
-    });
+    solarSystem.rotation.y += 0.001 * deltaTime;
+    earthOrbit.rotation.y += 0.002 * deltaTime;
+    moonOrbit.rotation.y += 0.003 * deltaTime;
     renderer.render(scene, camera);
 }

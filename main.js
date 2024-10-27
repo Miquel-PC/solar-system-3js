@@ -41,13 +41,12 @@ systemObjects.push(moonOrbit);
 
 
 // solar system setup
+solarSystem.add(earthOrbit);
+earthOrbit.position.x = 200;
+earthOrbit.position.y = 30;
 
-solarSystem.add(earthOrbit);  // Earth orbits the sun
-earthOrbit.position.x = 200;  // Position earth orbit away from the center
-earthOrbit.position.y = 30;  // Position earth orbit away from the center
-
-earthOrbit.add(moonOrbit);    // Moon orbits earth
-moonOrbit.position.x = 30;    // Position moon orbit away from earth
+earthOrbit.add(moonOrbit);
+moonOrbit.position.x = 30;
 
 scene.add(solarSystem);
 

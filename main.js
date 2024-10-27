@@ -28,27 +28,48 @@ camera.translateZ(15);
 camera.translateY(15);
 
 
-// object declaration
+// object declaration & initialization
 const systemObjects = [];
-let sun, earth, moon;
 
-/*const baseGeometry = new THREE.SphereGeometry(1, 8, 8);
+const solarSystem = new THREE.Object3D();
+const sunOrbit = new THREE.Object3D();
+const earthOrbit = new THREE.Object3D();
+const moonOrbit = new THREE.Object3D();
 
-const sunMaterial = new THREE.MeshStandardMaterial();
-const earthMaterial = new THREE.MeshStandardMaterial({color: "#1a5e82"});
-const moonMaterial = new THREE.MeshStandardMaterial();
+scene.add(sunOrbit);
+scene.add(earthOrbit);
+scene.add(moonOrbit);
 
-const sun = new THREE.Mesh(baseGeometry, sunMaterial);
-const earth = new THREE.Mesh(baseGeometry, earthMaterial);
-const moon = new THREE.Mesh(baseGeometry, moonMaterial);*/
+
+
+objectLoader(
+    "model/pumpkin/scene.gltf",
+    new THREE.Vector3(2, 2, 2),
+    new THREE.Vector3(0, 200, 0),
+    sunOrbit
+);
+
+objectLoader(
+    "model/earth/scene.gltf",
+    new THREE.Vector3(1, 1, 1),
+    new THREE.Vector3(0, 0, 0),
+    earthOrbit
+);
+
+objectLoader(
+    "model/zelda_moon/scene.gltf",
+    new THREE.Vector3(0.1, 0.1, 0.1),
+    new THREE.Vector3(0, 0, 0),
+    moonOrbit
+);
 
 
 
 // texture loading
 
-objectLoader(sun, "model/sun_pumpkin/scene.gltf", 5, new THREE.Vector3(0, 0, 0));
+/*objectLoader(sun, "model/sun_pumpkin/scene.gltf", 5, new THREE.Vector3(0, 0, 0));
 objectLoader(earth, "model/earth/scene.gltf", 2, new THREE.Vector3(2, 0, 0));
-objectLoader(moon, "model/zelda_moon/scene.gltf", 1, new THREE.Vector3(6, 0, 0));
+objectLoader(moon, "model/zelda_moon/scene.gltf", 1, new THREE.Vector3(6, 0, 0));*/
 
 
 /*function loadModelAsync() {
@@ -62,12 +83,12 @@ Promise.all([
 });*/
 
 
-function objectLoader(object, url, size, position) {
+function objectLoader(url, size, position, orbit) {
     loader.load(url, (gltf) => {
-        object = gltf.scene;
-        object.scale.set(size, size, size);
-        object.position.set(position);
-        scene.add(object);
+        const object = gltf.scene;
+        object.scale.set(size.x, size.y, size.z);
+        object.position.set(position.x, position.y, position.z);
+        orbit.add(object);
         systemObjects.push(object);
     });
 }
@@ -75,6 +96,8 @@ function objectLoader(object, url, size, position) {
 
 renderer.setSize(width, height);
 renderer.setAnimationLoop(animate);
+
+window.moon = moonOrbit;
 
 document.querySelector("body").appendChild(renderer.domElement);
 
@@ -88,7 +111,7 @@ function animate() {
 
     systemObjects.forEach((o) => {
         if (o !== undefined)
-            o.rotateX(0.03 * deltaTime);
+            o.rotateY(0.0001 * deltaTime);
     });
     renderer.render(scene, camera);
 }

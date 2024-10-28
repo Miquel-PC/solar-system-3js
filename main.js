@@ -1,9 +1,18 @@
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { RGBELoader } from 'three/examples/jsm/Addons.js';
 
 const width = window.innerWidth;
 const height = window.innerHeight;
+
+// HDRI
+const hdriLoader = new RGBELoader();
+hdriLoader.load("moonless_golf_4k", (bg) => {
+    bg.mapping = THREE.EquirectangularReflectionMapping;
+    scene.background = bg;
+    scene.environment = bg;
+});
 
 // scene
 const renderer = new THREE.WebGLRenderer();
@@ -136,3 +145,11 @@ function animate() {
 
     renderer.render(scene, camera);
 }
+
+window.addEventListener("resize", () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    //renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+  

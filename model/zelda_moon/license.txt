@@ -1,0 +1,11 @@
+Model Information:
+* title:	Majora’s mask moon
+* source:	https://sketchfab.com/3d-models/majoras-mask-moon-c745e76c5e2c463fac46ef212fdc7664
+* author:	Kiyoiscool (https://sketchfab.com/Kiyoiscool)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Majora’s mask moon" (https://sketchfab.com/3d-models/majoras-mask-moon-c745e76c5e2c463fac46ef212fdc7664) by Kiyoiscool (https://sketchfab.com/Kiyoiscool) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

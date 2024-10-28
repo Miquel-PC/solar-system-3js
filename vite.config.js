@@ -1,3 +1,3 @@
 export default {
-    base: "/solar-system-3js"
+    base: "/solar-system-3js/"
 }
